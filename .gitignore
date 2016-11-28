@@ -9,7 +9,7 @@
 hs_err_pid*
 
 target
-.mvn
+.mvnw
 mvnw.cmd
 
 ### IntelliJ IDEA ###
