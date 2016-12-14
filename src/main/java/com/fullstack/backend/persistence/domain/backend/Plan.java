@@ -1,6 +1,8 @@
 package com.fullstack.backend.persistence.domain.backend;
 
 
+import com.fullstack.enums.PlansEnum;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -15,10 +17,14 @@ public class Plan implements Serializable {
 
     private String name;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public Plan() {
+
+    }
+
+    public Plan(PlansEnum plansEnum) {
+        this.id = plansEnum.getId();
+        this.name = plansEnum.getPlanName();
     }
 
     public int getId() {
@@ -44,15 +50,12 @@ public class Plan implements Serializable {
 
         Plan plan = (Plan) o;
 
-        if (id != plan.id) return false;
-        return name != null ? name.equals(plan.name) : plan.name == null;
+        return id == plan.id;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return id;
     }
 }

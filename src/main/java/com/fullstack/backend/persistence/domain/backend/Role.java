@@ -1,12 +1,14 @@
 package com.fullstack.backend.persistence.domain.backend;
 
+import com.fullstack.enums.RolesEnum;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Role implements Serializable{
+public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,8 +20,13 @@ public class Role implements Serializable{
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles = new HashSet<>();
 
-    public Role(){
+    public Role() {
 
+    }
+
+    public Role(RolesEnum rolesEnum) {
+        this.id = rolesEnum.getId();
+        this.name = rolesEnum.getRoleName();
     }
 
     public int getId() {
@@ -53,17 +60,12 @@ public class Role implements Serializable{
 
         Role role = (Role) o;
 
-        if (id != role.id) return false;
-        if (name != null ? !name.equals(role.name) : role.name != null) return false;
-        return userRoles != null ? userRoles.equals(role.userRoles) : role.userRoles == null;
+        return id == role.id;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (userRoles != null ? userRoles.hashCode() : 0);
-        return result;
+        return id;
     }
 }
