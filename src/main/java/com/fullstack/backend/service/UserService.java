@@ -8,6 +8,7 @@ import com.fullstack.backend.persistence.repositories.RoleRepository;
 import com.fullstack.backend.persistence.repositories.UserRepository;
 import com.fullstack.enums.PlansEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +27,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Transactional
     public User createUser(User user, PlansEnum plansEnum, Set<UserRole> userRoles) {
+
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
 
         Plan plan = new Plan(plansEnum);
         // It makes sure the plans exist in the database
@@ -49,5 +56,5 @@ public class UserService {
 
     }
 
-    
+
 }
