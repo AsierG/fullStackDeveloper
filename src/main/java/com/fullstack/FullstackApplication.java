@@ -20,25 +20,30 @@ import java.util.Set;
 @SpringBootApplication
 public class FullstackApplication implements CommandLineRunner {
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	/** The application logger*/
-	private static final Logger LOG = LoggerFactory.getLogger(FullstackApplication.class);
+    /**
+     * The application logger
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(FullstackApplication.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(FullstackApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FullstackApplication.class, args);
+    }
 
-	@Override
-	public void run(String... strings) throws Exception {
-		User user = UserUtils.createBasicUser();
-		Set<UserRole> userRoles = new HashSet<>();
-		userRoles.add(new UserRole(user, new Role(RolesEnum.BASIC)));
-		LOG.debug("Creating user with username {}", user.getUsername());
-		userService.createUser(user, PlansEnum.PRO, userRoles);
-		LOG.info("User {} created", user.getUsername());
-	}
+    @Override
+    public void run(String... strings) throws Exception {
+        String username = "proUser";
+        String email = "proUser@fullstack.com";
+
+        User user = UserUtils.createBasicUser(username, email);
+        Set<UserRole> userRoles = new HashSet<>();
+        userRoles.add(new UserRole(user, new Role(RolesEnum.BASIC)));
+        LOG.debug("Creating user with username {}", user.getUsername());
+        userService.createUser(user, PlansEnum.PRO, userRoles);
+        LOG.info("User {} created", user.getUsername());
+    }
 
 
 }
