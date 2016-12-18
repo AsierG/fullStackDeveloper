@@ -5,9 +5,9 @@ import com.fullstack.backend.persistence.domain.backend.User;
 /**
  * Created by Axier on 13/12/2016.
  */
-public class UsersUtils {
+public class UserUtils {
 
-    private UsersUtils() {
+    private UserUtils() {
         throw new AssertionError("Non instantiable");
     }
 
