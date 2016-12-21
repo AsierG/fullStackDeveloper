@@ -139,10 +139,7 @@ public class PasswordResetTokenIntegrationTest extends AbstractIntegrationTest{
     }
 
 
-    //------------------> Private methods
-
     private PasswordResetToken createPasswordResetToken(String token, User user, LocalDateTime now) {
-
 
         PasswordResetToken passwordResetToken = new PasswordResetToken(token, user, now, expirationTimeInMinutes);
         passwordResetTokenRepository.save(passwordResetToken);
