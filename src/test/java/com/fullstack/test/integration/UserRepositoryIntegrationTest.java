@@ -23,8 +23,9 @@ import java.util.UUID;
 @SpringApplicationConfiguration(classes = FullstackApplication.class)
 public class UserRepositoryIntegrationTest extends AbstractIntegrationTest {
 
-    @Rule
-    public TestName testName = new TestName();
+
+
+    @Rule public TestName testName = new TestName();
 
 
     @Before
