@@ -34,9 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
     }
 
-    /**
-     * Public URLs.
-     */
+    /** Public URLs. */
     private static final String[] PUBLIC_MATCHERS = {
             "/webjars/**",
             "/css/**",
@@ -47,7 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/contact/**",
             "/error/**/*",
             "/console/**",
-            ForgotMyPasswordController.FORGOT_PASSWORD_URL_MAPPING
+            ForgotMyPasswordController.FORGOT_PASSWORD_URL_MAPPING,
+            ForgotMyPasswordController.CHANGE_PASSWORD_PATH
     };
 
     @Override
