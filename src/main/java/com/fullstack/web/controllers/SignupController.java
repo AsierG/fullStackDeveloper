@@ -123,7 +123,7 @@ public class SignupController {
         }
         user.setPlan(selectedPlan);
 
-        User registeredUser = null;
+        User registeredUser;
 
         // By default users get the BASIC ROLE
         Set<UserRole> roles = new HashSet<>();

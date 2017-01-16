@@ -3,6 +3,7 @@ package com.fullstack;
 import com.fullstack.backend.persistence.domain.backend.Role;
 import com.fullstack.backend.persistence.domain.backend.User;
 import com.fullstack.backend.persistence.domain.backend.UserRole;
+import com.fullstack.backend.service.PlanService;
 import com.fullstack.backend.service.UserService;
 import com.fullstack.enums.PlansEnum;
 import com.fullstack.enums.RolesEnum;
@@ -29,6 +30,9 @@ public class FullstackApplication implements CommandLineRunner {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PlanService planService;
+
     @Value("${webmaster.username}")
     private String webmasterUsername;
 
@@ -45,6 +49,10 @@ public class FullstackApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
+
+        LOG.info("Creating Basic and Pro plans in the database...");
+        planService.createPlan(PlansEnum.BASIC.getId());
+        planService.createPlan(PlansEnum.PRO.getId());
 
         User user = UserUtils.createBasicUser(webmasterUsername, webmasterEmail);
         user.setPassword(webmasterPassword);
