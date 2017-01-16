@@ -96,6 +96,18 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="description" th:text="#{signup.form.description}"></label>
+                        <textarea type="text" id="description" th:field="*{description}" class="form-control"
+                                  rows="4"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="file" th:text="#{signup.form.profile.image.url}"></label>
+                        <input type="file" id="file" name="file" class="form-control" />
+                    </div>
+
+
+                    <div class="form-group">
                         <label for="country" th:text="#{signup.form.country}"></label>
                         <select class="form-control" id="country" name="country" th:field="*{country}">
                             <option value="BG">Bulgaria</option>
