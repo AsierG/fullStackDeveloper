@@ -5,6 +5,7 @@ import com.fullstack.backend.persistence.domain.backend.Role;
 import com.fullstack.backend.persistence.domain.backend.User;
 import com.fullstack.backend.persistence.domain.backend.UserRole;
 import com.fullstack.backend.service.PlanService;
+import com.fullstack.backend.service.S3Service;
 import com.fullstack.backend.service.UserService;
 import com.fullstack.enums.PlansEnum;
 import com.fullstack.enums.RolesEnum;
@@ -40,6 +41,9 @@ public class SignupController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private S3Service s3Service;
 
     /**
      * The application logger
@@ -117,7 +121,7 @@ public class SignupController {
         // Stores the profile image on Amazon S3 and stores the URL in the user's record
         if (file != null && !file.isEmpty()) {
 
-            String profileImageUrl = null;
+            String profileImageUrl = s3Service.storeProfileImage(file, payload.getUsername());
             if (profileImageUrl != null) {
                 user.setProfileImageUrl(profileImageUrl);
             } else {
