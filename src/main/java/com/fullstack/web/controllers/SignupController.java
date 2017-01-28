@@ -6,9 +6,11 @@ import com.fullstack.backend.persistence.domain.backend.User;
 import com.fullstack.backend.persistence.domain.backend.UserRole;
 import com.fullstack.backend.service.PlanService;
 import com.fullstack.backend.service.S3Service;
+import com.fullstack.backend.service.StripeService;
 import com.fullstack.backend.service.UserService;
 import com.fullstack.enums.PlansEnum;
 import com.fullstack.enums.RolesEnum;
+import com.fullstack.utils.StripeUtils;
 import com.fullstack.utils.UserUtils;
 import com.fullstack.web.domain.frontend.BasicAccountPayload;
 import com.fullstack.web.domain.frontend.ProAccountPayload;
@@ -32,7 +34,7 @@ import java.io.IOException;
 import java.util.*;
 
 @Controller
-public class    SignupController {
+public class SignupController {
 
     @Autowired
     private PlanService planService;
@@ -43,10 +45,12 @@ public class    SignupController {
     @Autowired
     private S3Service s3Service;
 
-//    @Autowired
-//    private StripeService stripeService;
+    @Autowired
+    private StripeService stripeService;
 
-    /** The application logger */
+    /**
+     * The application logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(SignupController.class);
 
     public static final String SIGNUP_URL_MAPPING = "/signup";
@@ -165,17 +169,17 @@ public class    SignupController {
 
             // If the user has selected the pro account, creates the Stripe customer to store the stripe customer id in
             // the db
-//            Map<String, Object> stripeTokenParams = StripeUtils.extractTokenParamsFromSignupPayload(payload);
+            Map<String, Object> stripeTokenParams = StripeUtils.extractTokenParamsFromSignupPayload(payload);
 
-//            Map<String, Object> customerParams = new HashMap<String, Object>();
-//            customerParams.put("description", "DevOps Buddy customer. Username: " + payload.getUsername());
-//            customerParams.put("email", payload.getEmail());
-//            customerParams.put("plan", selectedPlan.getId());
-//            LOG.info("Subscribing the customer to plan {}", selectedPlan.getName());
-//            String stripeCustomerId = stripeService.createCustomer(stripeTokenParams, customerParams);
-//            LOG.info("Username: {} has been subscribed to Stripe", payload.getUsername());
+            Map<String, Object> customerParams = new HashMap<>();
+            customerParams.put("description", "DevOps Buddy customer. Username: " + payload.getUsername());
+            customerParams.put("email", payload.getEmail());
+            customerParams.put("plan", selectedPlan.getId());
+            LOG.info("Subscribing the customer to plan {}", selectedPlan.getName());
+            String stripeCustomerId = stripeService.createCustomer(stripeTokenParams, customerParams);
+            LOG.info("Username: {} has been subscribed to Stripe", payload.getUsername());
 
-//            user.setStripeCustomerId(stripeCustomerId);
+            user.setStripeCustomerId(stripeCustomerId);
 
             registeredUser = userService.createUser(user, PlansEnum.PRO, roles);
             LOG.debug(payload.toString());
