@@ -19,7 +19,6 @@ public class FullstackApplicationTests {
 	@Autowired
 	private I18NService i18NService;
 
-
 	@Test
 	public void testMessageByLocaleService() throws Exception {
 		String expectedResult = "Bootstrap starter template";
